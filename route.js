@@ -7,7 +7,7 @@ module.exports = (app) => {
   });
 
   //
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, ("../client/build", "index.html")));
+  app.get("/theAnswer", (req, res) => {
+    res.json({ theAnswer: "42" });
   });
 };

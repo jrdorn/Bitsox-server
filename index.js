@@ -1,11 +1,15 @@
 //init node express app
 const path = require("path");
+const cors = require("cors");
 const express = require("express");
+
+const app = express();
+app.use(cors());
+
 let PORT = process.env.PORT;
 if (PORT === null || PORT === undefined || PORT === "") {
   PORT = 8000;
 }
-const app = express();
 
 //test call
 app.get("/", (req, res) => {

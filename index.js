@@ -8,9 +8,9 @@ if (PORT === null || PORT === undefined || PORT === "") {
 const app = express();
 
 //test call
-// app.get("/", (req, res) => {
-//   res.sendFile(path.join(__dirname, 'public', '../'))
-// });
+app.get("/", (req, res) => {
+  res.json({ message: "gm" });
+});
 
 //access environment variables on localhost
 // require("dotenv").config();

@@ -30,17 +30,21 @@ const pool = new Pool({
   },
 });
 
-const testAnswer = pool.query(`SELECT * FROM Users;`, (err, res) => {
-  if (err) {
-    return err;
-  } else {
-    return res.rows;
-  }
-});
+const getUsers = async () => {
+  await pool.query(`SELECT * FROM Users;`, (err, res) => {
+    if (err) {
+      console.log(err);
+      return err;
+    } else {
+      console.log(res.rows);
+      return res.rows;
+    }
+  });
+};
 
 app.get("/users", (req, res) => {
   //read from the db: display all data in Users table
-  res.send(testAnswer);
+  getUsers().then((answer) => res.send(answer));
 });
 //
 //

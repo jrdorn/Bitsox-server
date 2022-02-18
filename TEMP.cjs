@@ -18,25 +18,3 @@ const testPG = () => {
 (async () => {
   console.log(await testPG());
 })();
-
-// return new Promise((resolve, reject) => {
-//   fetch(
-//     `PG`,
-//     {
-//       method: "get",
-//       headers: {
-//         Accept: "application/json",
-//         "Content-Type": "application/json",
-//       },
-//     }
-//   )
-//     .then((res) => res.json())
-
-//     .then((json, err) => {
-//       if (err) {
-//         reject(err);
-//       } else {
-//         resolve(json);
-//       }
-//     });
-// });

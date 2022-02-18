@@ -31,6 +31,7 @@ const pool = new Pool({
   },
 });
 
+//get list of users in database: [ { id: 0, email: '', password: '' } ]
 const getUsers = () => {
   return new Promise((resolve, reject) => {
     pool
@@ -53,9 +54,6 @@ app.get("/users", (req, res) => {
   /** TEST: Heroku deploy */
   getUsers().then((answer) => res.json(answer));
 });
-//
-//
-//
 
 //test call
 app.get("/", (req, res) => {

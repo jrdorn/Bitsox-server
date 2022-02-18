@@ -23,23 +23,26 @@ if (PORT === null || PORT === undefined || PORT === "") {
 const { Pool } = require("pg");
 
 //pool object hooked into Postgres db
-const pool = new Pool({
-  connectionString: process.env.IMPERMANENT_URI,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
+// const pool = new Pool({
+//   connectionString: process.env.IMPERMANENT_URI,
+//   ssl: {
+//     rejectUnauthorized: false,
+//   },
+// });
 
-const getUsers = () => {
-  pool
-    .query(`SELECT * FROM Users;`)
-    .then((res) => res.rows)
-    .catch((e) => e.stack);
-};
+// const getUsers = () => {
+//   pool
+//     .query(`SELECT * FROM Users;`)
+//     .then((res) => res.rows)
+//     .catch((e) => e.stack);
+// };
 
 app.get("/users", (req, res) => {
   //read from the db: display all data in Users table
-  getUsers().then((answer) => res.json(answer));
+  // getUsers().then((answer) => res.json(answer));
+
+  /** TEST: Heroku deploy */
+  res.send("this works");
 });
 //
 //

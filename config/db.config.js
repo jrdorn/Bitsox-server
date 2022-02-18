@@ -1,23 +1,26 @@
-//init node express app
-const path = require("path");
-const cors = require("cors");
-const express = require("express");
+//PostgreSQL db and Sequelize
 
-const app = express();
-app.use(cors());
+// //init Heroku Postgres client
+// const { Client } = require("pg");
+// const client = new Client({
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: {
+//     rejectUnauthorized: false,
+//   },
+// });
 
-let PORT = process.env.PORT;
-if (PORT === null || PORT === undefined || PORT === "") {
-  PORT = 8000;
-}
-
-//test call
-app.get("/", (req, res) => {
-  res.json({ message: "gm" });
-});
-
-//access environment variables on localhost
-// require("dotenv").config();
+// //log db rows
+// client.connect();
+// client.query(
+//   "SELECT table_schema,table_name FROM information_schema.tables;",
+//   (err, res) => {
+//     if (err) throw err;
+//     for (let row of res.rows) {
+//       console.log(JSON.stringify(row));
+//     }
+//     client.end();
+//   }
+// );
 
 //practice Postgres query
 // const { Pool } = require("pg");
@@ -45,11 +48,6 @@ app.get("/", (req, res) => {
 // In your code, you add this snippet with the credentials and connection string details, here process.env.DATABASE_URL comes from environment file, if it is there as it will enable ssl mode, else in local without ssl it works.
 //
 
-//create api endpoint and handle GET requests to the /api route
-app.get("/api", (req, res) => {
-  res.json({ message: "Hello from the server!" });
-});
-
 //practice using config vars
 // let showTimes = () => {
 //   let result = "";
@@ -62,8 +60,3 @@ app.get("/api", (req, res) => {
 // app.get("/times", (req, res) => {
 //   res.send(showTimes());
 // });
-
-//listen at specified port
-app.listen(PORT, () => {
-  console.log(`Server listening at ${PORT}...`);
-});

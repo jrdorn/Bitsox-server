@@ -24,22 +24,17 @@ const { Pool } = require("pg");
 
 //pool object hooked into Postgres db
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.IMPERMANENT_URI,
   ssl: {
     rejectUnauthorized: false,
   },
 });
 
-const getUsers = async () => {
-  await pool.query(`SELECT * FROM Users;`, (err, res) => {
-    if (err) {
-      console.log(err);
-      return err;
-    } else {
-      console.log(res.rows);
-      return res.rows;
-    }
-  });
+const getUsers = () => {
+  pool
+    .query(`SELECT * FROM Users;`)
+    .then((res) => res.rows)
+    .catch((e) => e.stack);
 };
 
 app.get("/users", (req, res) => {

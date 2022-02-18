@@ -50,9 +50,14 @@
 
 //
 // const pool = new Pool({ connectionString: process.env.DATABASE_URL || 'postgresql://postgres:@localhost:5432/', ssl: process.env.DATABASE_URL ? true : false })
-// In your code, you add this snippet with the credentials and connection string details, here process.env.DATABASE_URL comes from environment file, if it is there as it will enable ssl mode, else in local without ssl it works.
+// In your code, you add this snippet with the credentials and connection string details,
+// here process.env.DATABASE_URL comes from environment file, if it is there as
+//  it will enable ssl mode, else in local without ssl it works.
 //
 
+//
+//
+//
 //practice using config vars
 // let showTimes = () => {
 //   let result = "";

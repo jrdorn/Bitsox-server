@@ -30,15 +30,17 @@ const pool = new Pool({
   },
 });
 
+const testAnswer = pool.query(`SELECT * FROM Users;`, (err, res) => {
+  if (err) {
+    return err;
+  } else {
+    return res.rows;
+  }
+});
+
 app.get("/users", (req, res) => {
   //read from the db: display all data in Users table
-  pool.query(`SELECT * FROM Users;`, (err, res) => {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(res.rows);
-    }
-  });
+  res.send(testAnswer);
 });
 //
 //

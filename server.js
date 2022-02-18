@@ -44,7 +44,7 @@ const getUsers = async () => {
 
 app.get("/users", (req, res) => {
   //read from the db: display all data in Users table
-  getUsers().then((answer) => res.send(answer));
+  getUsers().then((answer) => res.json(answer));
 });
 //
 //

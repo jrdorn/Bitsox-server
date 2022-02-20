@@ -12,23 +12,27 @@ app.use(cors()); //CORS
 app.use(bodyParser.json()); // handle application/json requests
 app.use(bodyParser.urlencoded({ extended: true })); // handle application/x-www-form-urlencoded requests
 
+//set app port
 let PORT = process.env.PORT;
 if (PORT === null || PORT === undefined || PORT === "") {
   PORT = 8000;
 }
 
-//
-//
-//
+//connect from app to Postgres db
 const { Pool } = require("pg");
-
-//pool object hooked into Postgres db
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false,
   },
 });
+/** You can enable multiple statements in your pool config multipleStatements: true on construction of your pool and then take advantage of transactions.
+BEGIN;
+INSERT ...;
+SELECT LAST_INSERT_ID() INTO @lastId;
+UPDATE ...;
+COMMIT;
+ */
 
 //get list of users in database: [ { id: 0, email: '', password: '' } ]
 const getUsers = () => {
@@ -50,7 +54,9 @@ const getUsers = () => {
 
 // TEST read from the db: display all data in Users table
 app.get("/users", (req, res) => {
-  getUsers().then((answer) => res.json(answer));
+  getUsers()
+    .then((answer) => res.json(answer))
+    .catch((err) => res.send(err));
 });
 
 //test call

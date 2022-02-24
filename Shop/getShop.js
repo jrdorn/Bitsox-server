@@ -1,18 +1,9 @@
 /**
-  
- connect to postgres
-
- get a list of items and their properties
-
  
+ client GET inventory => server gets inventory from database => 
+ 
+ validate: drop those where sold is true
 
- client GET sock0 => server gets sock0 from database => send to client with image
-
-
-
-
-
-PG
 
  id | name  | price |  description   | quantity | sold 
 ----+-------+-------+----------------+----------+------
@@ -24,9 +15,52 @@ PG
   6 | sock6 | $3.50 | a teal sock    |        1 | f
   7 | sock7 | $3.50 | a brown sock   |        1 | f
   8 | sock8 | $3.50 | a gold sock    |        1 | f
-  9 | sock9 | $3.50 | a green sock   |        1 | f
+  9 | sock9 | $3.50 | a green sock   |        1 | t
 (9 rows)
 
 
 
+
+INSERT INTO Shop(Name, Price, Description, Quantity, Sold) Values('sock5', '3.50', 'an orange sock', 1, FALSE);
+
+SELECT * FROM Shop;
+
+UPDATE Shop
+SET sold = true
+WHERE id = 9;
+
+DELETE FROM Shop
+WHERE id = 1;
+
+
  */
+
+//connect from app to Postgres db
+const { Pool } = require("pg");
+
+// get a list of items and their properties
+const getShop = () => {
+  const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false,
+    },
+  });
+
+  return new Promise((resolve, reject) => {
+    pool
+      .connect()
+      .then((client) => {
+        return client.query(`SELECT * FROM Shop;`).then((res) => {
+          client.release();
+          resolve(res.rows);
+        });
+      })
+      .catch((e) => {
+        client.release();
+        reject(e);
+      });
+  });
+};
+
+module.exports = getShop;

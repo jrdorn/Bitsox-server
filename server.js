@@ -4,8 +4,9 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const express = require("express");
 
-//
+//TEMP only fake logins
 const getUsers = require("./Auth/users");
+const getShop = require("./Shop/getShop");
 
 //access environment variables on localhost
 // require("dotenv").config();
@@ -48,8 +49,11 @@ app.get("/api", (req, res) => {
 
 /* Shop */
 
+//get list of shop items and their properties
 app.get("/api/shop", (req, res) => {
-  res.json({ message: "PLACEHOLDER: import function from Shop" });
+  getShop()
+    .then((answer) => res.json(answer))
+    .catch((err) => res.send(err));
 });
 
 //listen at specified port

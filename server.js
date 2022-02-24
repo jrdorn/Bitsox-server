@@ -4,6 +4,9 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const express = require("express");
 
+//
+const getUsers = require("./Auth/users");
+
 //access environment variables on localhost
 // require("dotenv").config();
 
@@ -18,39 +21,12 @@ if (PORT === null || PORT === undefined || PORT === "") {
   PORT = 8000;
 }
 
-//connect from app to Postgres db
-const { Pool } = require("pg");
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
-/** You can enable multiple statements in your pool config multipleStatements: true on construction of your pool and then take advantage of transactions.
-BEGIN;
-INSERT ...;
-SELECT LAST_INSERT_ID() INTO @lastId;
-UPDATE ...;
-COMMIT;
- */
+/* Routes */
 
-//get list of users in database: [ { id: 0, email: '', password: '' } ]
-const getUsers = () => {
-  return new Promise((resolve, reject) => {
-    pool
-      .connect()
-      .then((client) => {
-        return client.query(`SELECT * FROM Users;`).then((res) => {
-          client.release();
-          resolve(res.rows);
-        });
-      })
-      .catch((e) => {
-        client.release();
-        reject(e);
-      });
-  });
-};
+// TEST temporary
+app.get("/", (req, res) => {
+  res.json({ message: "gm" });
+});
 
 // TEST read from the db: display all data in Users table
 app.get("/users", (req, res) => {
@@ -59,14 +35,21 @@ app.get("/users", (req, res) => {
     .catch((err) => res.send(err));
 });
 
-//test call
-app.get("/", (req, res) => {
-  res.json({ message: "gm" });
-});
-
-//create api endpoint and handle GET requests to the /api route
+// TEXT temporary
 app.get("/api", (req, res) => {
   res.json({ message: "Hello from the server!" });
+});
+
+/* Auth */
+
+/* Cart */
+
+/* Private */
+
+/* Shop */
+
+app.get("/api/shop", (req, res) => {
+  res.json({ message: "PLACEHOLDER: import function from Shop" });
 });
 
 //listen at specified port

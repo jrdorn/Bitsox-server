@@ -24,31 +24,39 @@ if (PORT === null || PORT === undefined || PORT === "") {
 
 /* Routes */
 
-// TEST temporary
+// TEMP
 app.get("/", (req, res) => {
   res.json({ message: "gm" });
 });
 
-// TEST read from the db: display all data in Users table
+// TEMP read from the db: display dummy data in Users table
 app.get("/users", (req, res) => {
   getUsers()
     .then((answer) => res.json(answer))
     .catch((err) => res.send(err));
 });
 
-// TEXT temporary
+// TEMP
 app.get("/api", (req, res) => {
-  res.json({ message: "Hello from the server!" });
+  res.json({ message: "Gm from the server!" });
 });
 
 /* Auth */
+app.get("/api/shop", (req, res) => {
+  res.json({ message: "User auth" });
+});
 
 /* Cart */
+app.get("/api/cart", (req, res) => {
+  res.json({ message: "Individual user cart items" });
+});
 
 /* Private */
+app.get("/api/private", (req, res) => {
+  res.json({ message: "Private user data: wishlist, routes, account info" });
+});
 
 /* Shop */
-
 //get list of shop items and their properties
 app.get("/api/shop", (req, res) => {
   getShop()

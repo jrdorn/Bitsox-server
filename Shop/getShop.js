@@ -1,3 +1,5 @@
+// Get all items in the shop, and send them with the corresponding images
+
 /**
  
  client GET inventory => server gets inventory from database => 

@@ -7,6 +7,7 @@ const express = require("express");
 //TEMP only fake logins
 const getUsers = require("./Auth/users");
 const getShop = require("./Shop/getShop");
+const { nextTick } = require("process");
 
 //access environment variables on localhost
 // require("dotenv").config();
@@ -42,7 +43,7 @@ app.get("/api", (req, res) => {
 });
 
 /* Auth */
-app.get("/api/shop", (req, res) => {
+app.get("/api/auth", (req, res) => {
   res.json({ message: "User auth" });
 });
 
@@ -62,6 +63,27 @@ app.get("/api/shop", (req, res) => {
   getShop()
     .then((answer) => res.json(answer))
     .catch((err) => res.send(err));
+});
+// get image for individual shop item
+app.get("/api/shop/:item", (req, res) => {
+  const options = {
+    root: path.join(__dirname, "Shop/img"), // access item icons in Shop folder
+    headers: {
+      "x-timestamp": Date.now(),
+      "x-sent": true,
+    },
+  };
+
+  // validate inventory item request
+  const item = req.params.item + ".png";
+
+  // send image file to user
+  res.sendFile(item, options, (err) => {
+    if (err) {
+      console.error(err);
+      next(err);
+    }
+  });
 });
 
 //listen at specified port

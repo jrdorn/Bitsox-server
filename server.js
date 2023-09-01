@@ -39,7 +39,7 @@ app.get("/users", (req, res) => {
 
 // TEMP
 app.get("/api", (req, res) => {
-  res.json({ message: "Gm from the server!" });
+  res.json({ message: "Good morning from the server!" });
 });
 
 /* Auth */
